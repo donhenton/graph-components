@@ -1,23 +1,30 @@
 var React = require('react');
-
+var d3 = require('d3');
+var _ = require('lodash');
+var Extend = require('extend');
 
 
 module.exports = React.createClass({
 
     getInitialState: function () {
 
-        return {data: this.props.data};
+        return {data: this.formatData(this.props.data)};
     },
 
     componentWillMount: function () {
 
     },
-
-    componentWillReceiveProps: function (nextProps) {
-        this.setState({data: nextProps.data});
+    
+    formatData(d)
+    {
+        return d;
     },
 
-    data: {"alpha": 100},
+    componentWillReceiveProps: function (nextProps) {
+        this.setState({data: this.formatData(nextProps.data)});
+    },
+
+    
 
     render: function () {
         return (
