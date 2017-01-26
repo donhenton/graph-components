@@ -1,0 +1,9 @@
+/node_modules/
+public/libs
+.DS_Store
+/nbproject/private/
+/config/props/application.properties
+/target/
+/src/application.properties
+/src/public/css/main.css
+/src/public/js/bundle.js
