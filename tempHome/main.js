@@ -13,7 +13,7 @@ var data = [
 var w = 800;
 var h = 450;
 var margin = {
-    top: 58,
+    top: 50,
     bottom: 100,
     left: 80,
     right: 40
@@ -117,6 +117,71 @@ function drawAxis(params, x, y, initialize)
 
 }
 
+
+function createToolTipTriangle(container,boxSize)
+{
+    var w = 25;
+    var lineData = [{x: 0, y: w / 2}, {x: w, y: 0}, {x: w, y: w}];
+    var lineFunction = d3.svg.line()
+            .x(function (d) {
+                return d.x;
+            })
+            .y(function (d) {
+                return d.y;
+            })
+            .interpolate("linear");
+
+
+    container.append("path")
+            .attr("d", lineFunction(lineData))
+            .attr("stroke-width", 2)
+            .attr("fill", "red");
+
+
+}
+
+
+function createToolTip(rect, data, index)
+{
+
+    console.log(rect.attr("width"))
+    var xPosition = parseFloat(rect.attr("x")) + parseFloat(rect.attr("width"));
+    var yPosition = params.height - parseFloat(rect.attr("height") / 2);
+
+    //var xPosition = d3.mouse(rect[0][0])[0];
+    //var yPosition =   d3.mouse(rect[0][0])[1];
+    var display = d3.select('.display');
+    var toolGroup = display.append("g");
+    var toolTipSize = 40;
+    toolGroup
+            .attr("transform", "translate(" + xPosition + "," + yPosition + ")")
+            .attr("id", "tooltip")
+    toolGroup.append("rect")
+            .attr("width", toolTipSize + "")
+            .attr("height", toolTipSize + "")
+            .attr("fill", "black");
+
+
+    createToolTipTriangle(toolGroup,toolTipSize)        
+
+
+
+
+
+    toolGroup.append("text")
+
+            .attr("text-anchor", "center")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "11px")
+            .attr("font-weight", "bold")
+            .attr("transform", "translate(5," + toolTipSize / 2 + ")")
+            .attr("fill", "white")
+            .text(data.value);
+
+
+
+}
+
 function plot(params, initialize) {
 
 
@@ -143,13 +208,29 @@ function plot(params, initialize) {
             .append("rect")
             .classed("bar", true)
             .on("mouseover", function (d, i) {
+                //var mousePtX = d3.mouse(this)[0];
+                //var mousePtY = d3.mouse(this)[1];
+                var thisRect = d3.select(this);
+                createToolTip(thisRect, d, i);
 
             })
             .on("mousemove", function (d, i) {
+                /*
+                 var thisRect = d3.select(this)
+                 var xPosition = parseFloat(thisRect.attr("x"));
+                 var yPosition = params.height - parseFloat(thisRect.attr("height"));
+                 var mousePtX = d3.mouse(this)[0];
+                 var mousePtY = d3.mouse(this)[1];
+                 console.log("x "+(mousePtX-xPosition)+","+(mousePtY-yPosition))
+                 d3.select("#tooltip")
+                 .attr("transform", "translate("+(mousePtX-xPosition)+","+(mousePtY-yPosition)+")")
+                 //Create the tooltip label
+                 */
 
             })
             .on("mouseout", function (d, i) {
 
+                d3.select("#tooltip").remove();
             })
     var baseLineGroup = this.append('g');
 
@@ -157,7 +238,7 @@ function plot(params, initialize) {
     baseLineGroup.append("line")
             .classed("baseline-line", true)
             .style("stroke", "black")
-            .style("stroke-dasharray", "10, 5")
+            .style("stroke-dasharray", "4,2")
             .attr("x1", 0)
             .attr("y1", y(params.baseline))
             .attr("x2", params.width)
@@ -165,10 +246,10 @@ function plot(params, initialize) {
 
     baseLineGroup.append("text")
             .classed("baseline-label", true)
-           // .attr("text-anchor", "right")
-            .attr('font-weight','bolder')
+            // .attr("text-anchor", "right")
+            .attr('font-weight', 'bolder')
             //.attr('font-size','20px')
-            .attr("transform", "translate("+(params.width*.9)+","+(y(params.baseline) - 7) + ")")
+            .attr("transform", "translate(" + (params.width * .9) + "," + (y(params.baseline) - 7) + ")")
             .text("Baseline 1.0");
 
 
@@ -176,7 +257,7 @@ function plot(params, initialize) {
     this.selectAll(".bar")
 
             .attr("x", function (d, i) {
-
+                //this determines the displacement of the bars
                 return  x(d.key) + x.rangeBand() * .125;
 
             })
@@ -187,6 +268,7 @@ function plot(params, initialize) {
                 return params.height - y(d.value);
             })
             .attr("width", function (d) {
+                //this determines the width (1-.75)/2 use for x above
                 return  x.rangeBand() * .75;
             })
             .style("fill", function (d, i) {

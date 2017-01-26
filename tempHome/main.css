@@ -10,6 +10,7 @@ body,html{
     border: 1px solid #CCC;
 }
 
+/* the axis of the graph */
 .axis path{
     fill: none;
     stroke: black;
