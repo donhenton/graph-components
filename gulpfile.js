@@ -51,8 +51,8 @@ console.log("compiling to '"+targetLocation+"'")
  */
 var pageURL = 'http://localhost:8080';
 
-var SASS_FILES = './sass/**/*.scss';
-var WATCH_JS = ['./src/**/*.js'];
+var SASS_FILES = './src/sass/**/*.scss';
+var WATCH_JSX = ['./src/react/**/*.jsx'];
 var MAIN_HTML_FILE = ['./src/html/index.html'];
 
 function Bundle() {
@@ -152,7 +152,7 @@ gulp.task('watch', function () {
 
     });
 
-    watch(WATCH_JS, function (events, done) {
+    watch(WATCH_JSX, function (events, done) {
 
         gulp.start('build');
     });

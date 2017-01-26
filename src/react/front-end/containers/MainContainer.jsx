@@ -1,5 +1,5 @@
 var React = require('react');
-
+var TopInterests = require('./../components/TopInterests')
 
 
 module.exports = React.createClass({
@@ -15,11 +15,11 @@ module.exports = React.createClass({
          
     },
     
-   
+    data: {"alpha":100},
     
     render: function () {
          return (
-                  <div>main stuff</div>  
+                   <TopInterests data={this.data} />
                 )
     }
 });
