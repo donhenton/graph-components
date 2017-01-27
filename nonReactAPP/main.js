@@ -22,7 +22,7 @@ var width = w - margin.left - margin.right;
 var height = h - margin.top - margin.bottom;
 tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d.value; });
 tip.direction('e');
-tip.offset([-10,-0])
+//tip.offset([-10,-0])
 var params =
         {
             data: data,
