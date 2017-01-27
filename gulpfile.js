@@ -97,7 +97,7 @@ gulp.task('copy-html', function () {
 
 gulp.task('clean', function (  ) {
 
-    del(['target','public_html']);
+    del(['target']);
 
 });
 
@@ -134,7 +134,8 @@ gulp.task('copy-assets', function () {
               .pipe(gulp.dest(targetLocation+'/css'));
 
             
- 
+            gulp.src(['./src/html/bower_components/**/*'] )
+              .pipe(gulp.dest(targetLocation+'bower_components'));
     
     
 });

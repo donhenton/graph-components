@@ -1,7 +1,7 @@
-var React = require('react');
-var ReactDom = require('react-dom');
-var Main = require('./containers/MainContainer');
- 
+//var React = require('react');
+//var ReactDom = require('react-dom');
+////var Main = require('./containers/MainContainer');
+var topInterests = require("./d3-graphs/d3-TopInterests");
 
 var loadedStates = ['complete', 'loaded', 'interactive'];
 
@@ -15,10 +15,15 @@ function run() {
      
     //use this to pass initial properties
     //pathRequested is global
-    
+    /*
     var propObj = {};
     
     ReactDom.render((
          <Main />
     ), document.querySelector('#pageContainer'));
+    
+    */
+   //use for graph right now
+ 
+   
 }
