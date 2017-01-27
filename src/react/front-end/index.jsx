@@ -27,10 +27,10 @@ var data = [
 {key: "Award Shows", value: .8},
 {key: "Motherhood", value: 1.05}];
         var margin = {
-        top: 50,
-                bottom: 100,
-                left: 80,
-                right: 40
+                top: 20,
+                bottom: 70,
+                left: 30,
+                right: 30
                 };
         var params = {
 

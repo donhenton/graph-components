@@ -69,7 +69,7 @@ module.exports =
 
 
                     //labels for the x axis        
-                    this.svg.append("g")
+                    this.chart.append("g")
                             .classed("x axis", true)
                             .attr("transform", "translate(" + 0 + "," + params.height + ")")
                             .call(xAxis)
@@ -80,29 +80,29 @@ module.exports =
                             .attr("dy", 20)
 
 
-                    this.svg.append("g")
+                    this.chart.append("g")
                             .classed("y axis", true)
                             .attr("transform", "translate(0,0)")
                             .call(yAxis);
 
 
-                    this.svg.selectAll("g.y.axis text").attr("visibility", "hidden");
+                    this.chart.selectAll("g.y.axis text").attr("visibility", "hidden");
 
 
                 }//initial
                 else
                 {
-                    this.svg.selectAll("g.x.axis")
+                    this.chart.selectAll("g.x.axis")
                             .transition()
                             .duration(500).ease("bounce")
                             .call(xAxis);
-                    this.svg.selectAll(".x-axis-label")
+                    this.chart.selectAll(".x-axis-label")
                             .style("text-anchor", "end")
                             .attr("dx", -8)
                             .attr("dy", 8)
 
 
-                    this.svg.selectAll("g.y.axis")
+                    this.chart.selectAll("g.y.axis")
                             .transition()
                             .duration(500).ease("bounce")
                             .call(y);
@@ -133,7 +133,7 @@ module.exports =
 
 
                 //enter
-                this.svg.selectAll(".bar")
+                this.chart.selectAll(".bar")
                         .data(params.data)
                         .enter()
                         .append("rect")
@@ -141,7 +141,7 @@ module.exports =
 
                         .on("mouseover", this.tip.show)
                         .on("mouseout", this.tip.hide)
-                var baseLineGroup = this.svg.append('g');
+                var baseLineGroup = this.chart.append('g');
 
                 //the base line
                 baseLineGroup.append("line")
@@ -163,7 +163,7 @@ module.exports =
 
                  var me = this;       
                 //update
-                this.svg.selectAll(".bar")
+                this.chart.selectAll(".bar")
 
                         .attr("x", function (d, i) {
                             //this determines the displacement of the bars
@@ -185,7 +185,7 @@ module.exports =
                         });
 
 
-                this.svg.selectAll(".bar-label")
+                this.chart.selectAll(".bar-label")
                         .transition().duration(500).ease("bounce")
                         .attr("x", function (d, i) {
                             return  x(d.key) + (x.rangeBand() / 2);
@@ -200,12 +200,12 @@ module.exports =
                         });
 
                 //exit()
-                this.svg.selectAll(".bar")
+                this.chart.selectAll(".bar")
                         .data(params.data)
                         .exit()
                         .remove();
 
-                this.svg.selectAll(".bar-label")
+                this.chart.selectAll(".bar-label")
                         .data(params.data)
                         .exit()
                         .remove();
