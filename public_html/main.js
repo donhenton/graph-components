@@ -58,11 +58,12 @@ function init()
 
 function drawAxis(params, x, y, initialize)
 {
-    var xAxis = d3.axisBottom().tickSize(0)
-            .scale(x);
-    var yAxis = d3.axisLeft().tickSize(0)
-            .scale(y);
-            
+    var xAxis = d3.svg.axis().tickSize(0)
+            .scale(x)
+            .orient("bottom");
+    var yAxis = d3.svg.axis().tickSize(0)
+            .scale(y)
+            .orient("left");
 
     if (initialize)
     {
@@ -121,12 +122,12 @@ function plot(params, initialize) {
 
 
 
-    var x = d3.scaleBand()
+    var x = d3.scale.ordinal()
             .domain(params.data.map(function (entry) {
                 return entry.key;
             }))
-            .range([0, params.width]);
-    var y = d3.scaleLinear()
+            .rangeBands([0, params.width]);
+    var y = d3.scale.linear()
             .domain([0, d3.max(params.data, function (d) {
                     return d.value;
                 })])
@@ -142,7 +143,7 @@ function plot(params, initialize) {
             .enter()
             .append("rect")
             .classed("bar", true)
-            
+
             .on("mouseover", tip.show)
             .on("mouseout", tip.hide)
     var baseLineGroup = this.append('g');
@@ -171,7 +172,7 @@ function plot(params, initialize) {
 
             .attr("x", function (d, i) {
                 //this determines the displacement of the bars
-                return  x(d.key) + x.bandwidth() * .125;
+                return  x(d.key) + x.rangeBand() * .125;
 
             })
             .attr("y", function (d, i) {
@@ -182,17 +183,17 @@ function plot(params, initialize) {
             })
             .attr("width", function (d) {
                 //this determines the width (1-.75)/2 use for x above
-                return  x.bandwidth() * .75;
+                return  x.rangeBand() * .75;
             })
             .style("fill", function (d, i) {
                 return getColorForBar(i);
             });
 
-    var t = d3.transition().duration(500).ease(d3.easeBounce);       
+
     this.selectAll(".bar-label")
-          //  .transition().duration(500).ease("bounce")
+            .transition().duration(500).ease("bounce")
             .attr("x", function (d, i) {
-                return  x(d.key) + (x.bandwidth() / 2);
+                return  x(d.key) + (x.rangeBand() / 2);
             })
             .attr("dx", 0)
             .attr("y", function (d, i) {
