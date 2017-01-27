@@ -7,3 +7,4 @@ public/libs
 /src/application.properties
 /src/public/css/main.css
 /src/public/js/bundle.js
+/bower_components/

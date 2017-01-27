@@ -58,12 +58,11 @@ function init()
 
 function drawAxis(params, x, y, initialize)
 {
-    var xAxis = d3.svg.axis().tickSize(0)
-            .scale(x)
-            .orient("bottom");
-    var yAxis = d3.svg.axis().tickSize(0)
-            .scale(y)
-            .orient("left");
+    var xAxis = d3.axisBottom().tickSize(0)
+            .scale(x);
+    var yAxis = d3.axisLeft().tickSize(0)
+            .scale(y);
+            
 
     if (initialize)
     {
@@ -122,14 +121,14 @@ function createToolTipTriangle(container,boxSize)
 {
     var w = 25;
     var lineData = [{x: 0, y: w / 2}, {x: w, y: 0}, {x: w, y: w}];
-    var lineFunction = d3.svg.line()
+    var lineFunction = d3.line()
             .x(function (d) {
                 return d.x;
             })
             .y(function (d) {
                 return d.y;
             })
-            .interpolate("linear");
+            
 
 
     container.append("path")
@@ -181,17 +180,19 @@ function createToolTip(rect, data, index)
 
 
 }
+//http://denvycom.com/blog/d3-js-version-4-x-examples-and-changes-from-version-3-x/
+//https://github.com/d3/d3/blob/master/CHANGES.md
 
 function plot(params, initialize) {
 
 
 
-    var x = d3.scale.ordinal()
+    var x = d3.scaleBand()
             .domain(params.data.map(function (entry) {
                 return entry.key;
             }))
-            .rangeBands([0, params.width]);
-    var y = d3.scale.linear()
+            .range([0, params.width]);
+    var y = d3.scaleLinear()
             .domain([0, d3.max(params.data, function (d) {
                     return d.value;
                 })])
@@ -258,7 +259,7 @@ function plot(params, initialize) {
 
             .attr("x", function (d, i) {
                 //this determines the displacement of the bars
-                return  x(d.key) + x.rangeBand() * .125;
+                return  x(d.key) + x.bandwidth() * .125;
 
             })
             .attr("y", function (d, i) {
@@ -269,17 +270,17 @@ function plot(params, initialize) {
             })
             .attr("width", function (d) {
                 //this determines the width (1-.75)/2 use for x above
-                return  x.rangeBand() * .75;
+                return  x.bandwidth() * .75;
             })
             .style("fill", function (d, i) {
                 return getColorForBar(i);
             });
 
-
+    var t = d3.transition().duration(500).ease(d3.easeBounce);       
     this.selectAll(".bar-label")
-            .transition().duration(500).ease("bounce")
+          //  .transition().duration(500).ease("bounce")
             .attr("x", function (d, i) {
-                return  x(d.key) + (x.rangeBand() / 2);
+                return  x(d.key) + (x.bandwidth() / 2);
             })
             .attr("dx", 0)
             .attr("y", function (d, i) {
