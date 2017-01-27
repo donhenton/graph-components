@@ -35,9 +35,9 @@ var data = [
         var params = {
 
          margin: margin,
-                h:450,
+                boxHeight:450,
                 data: data,
-                w: 800,
+                boxWidth: 800,
                 graphSelector: "#graphLocation"
         }
 

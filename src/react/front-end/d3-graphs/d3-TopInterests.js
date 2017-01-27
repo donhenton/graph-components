@@ -12,6 +12,8 @@ module.exports =
             svg: null,
             chart: null,
             margin: null,
+            graphWidth: 0,
+            graphHeight: 0,
             w: null, 
             h: null,
             data: null,
@@ -21,19 +23,28 @@ module.exports =
 
             graphSelector: null,
 
-            computeGraphHeight: function ()
-            {
-                return this.boxHeight - this.margin.top - this.margin.bottom;
-            },
+            
 
             update: function (newData)
             {
+                
+                 var params =
+                        {
+                            data: newData,
+                            height: this.graphHeight,
+                            width: this.graphWidth,
+                            baseline: 1
+
+
+                        };
+                this.plot.call(this, params);
+                /*
                 var me = this;
                 var y = d3.scale.linear()
                         .domain([0, d3.max(newData, function (d) {
                                 return d.value;
                             })])
-                        .range([params.height, 0]);
+                        .range([me.computeGraphHeight(), 0]);
                 this.chart.selectAll("g.x.axis")
                         .transition()
                         .duration(500).ease("bounce")
@@ -48,6 +59,7 @@ module.exports =
                         .transition()
                         .duration(500).ease("bounce")
                         .call(y);
+                        */
             },
 ///
             init: function (initParams)
@@ -69,19 +81,19 @@ module.exports =
 
 
                 this.svg.call(this.tip);
-                var width = this.boxWidth - this.margin.left - this.margin.right;
-
+                this.graphWidth = this.boxWidth - this.margin.left - this.margin.right;
+                this.graphHeight = this.boxHeight - this.margin.top - this.margin.bottom;
 
                 var params =
                         {
                             data: this.data,
-                            height: this.computeGraphHeight(),
-                            width: width,
+                            height: this.graphHeight,
+                            width: this.graphWidth,
                             baseline: 1
 
 
                         };
-                this.plot.call(this, params, true);
+                this.plot.call(this, params);
             },
 
             drawAxis: function (params, x, y)
