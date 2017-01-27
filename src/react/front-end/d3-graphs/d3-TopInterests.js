@@ -31,39 +31,28 @@ module.exports =
 
             update: function (newData)
             {
-                
-                 var params =
-                        {
-                            data: newData,
-                            height: this.graphHeight,
-                            width: this.graphWidth,
-                            baseline: 1
-
-
-                        };
-                this.plot.call(this, params);
-                /*
-                var me = this;
-                var y = d3.scale.linear()
+                this.xScale.domain(newData.map(function (entry) {
+                            return entry.key;
+                        }))
+                this.chart.select("g.x.axis").call(this.xAxis)
+                .selectAll("g.x.axis text")
+                        .classed('x-axis-label', true)
+                        .style("text-anchor", "center")
+                        //.attr("dx", -8)
+                        .attr("dy", 20).transition() ;
+                this.yScale = d3.scale.linear()
                         .domain([0, d3.max(newData, function (d) {
                                 return d.value;
                             })])
-                        .range([me.computeGraphHeight(), 0]);
-                this.chart.selectAll("g.x.axis")
-                        .transition()
-                        .duration(500).ease("bounce")
-                        .call(me.xAxis);
-                this.chart.selectAll(".x-axis-label")
-                        .style("text-anchor", "end")
-                        .attr("dx", -8)
-                        .attr("dy", 8)
-
-
-                this.chart.selectAll("g.y.axis")
-                        .transition()
-                        .duration(500).ease("bounce")
-                        .call(y);
-                        */
+                        .range([this.graphHeight, 0]);
+                
+                this.yAxis = d3.svg.axis().tickSize(0)
+                        .scale(this.yScale)
+                        .orient("left");
+                
+                d3.select('g.y.axis').call(this.yAxis)
+                
+            
             },
 ///
             init: function (initParams)
@@ -128,7 +117,7 @@ module.exports =
                         .call(this.yAxis);
 
 
-                this.chart.selectAll("g.y.axis text").attr("visibility", "hidden");
+            //    this.chart.selectAll("g.y.axis text").attr("visibility", "hidden");
 
 
 

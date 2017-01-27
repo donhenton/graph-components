@@ -56,9 +56,9 @@ $('#updateTest').on("click" ,
 function()
 {
        var data2 = [
-        {key: "Manny", value: .1},
-        {key: "Moe", value: .1},
-        {key: "Motherhood", value: .1}];
+        {key: "Manny", value: 5},
+        {key: "Moe", value: 3},
+        {key: "Motherhood", value: .7}];
     
     topInterests.update(data2)
     

@@ -1,3 +1,4 @@
 https://github.com/freddyrangel/playing-with-react-and-d3/tree/master/finished/src/components
 http://jsfiddle.net/Xmdg4/1/
 http://stackoverflow.com/questions/18531460/d3-js-ordinal-axis-is-not-updated-correctly
+https://www.dashingd3js.com/lessons/making-dynamic-scales-and-axes
