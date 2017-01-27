@@ -23,6 +23,7 @@ module.exports =
 ///
             init: function (initParams)
             {
+                this.initialize = false;
                 this.tip.direction('e');
                 this.margin = initParams.margin;
                 this.h = initParams.h;
@@ -35,7 +36,7 @@ module.exports =
                         .attr("height", this.h);
                 this.chart = this.svg.append("g")
                         .classed("display", true)
-                        .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+                         .attr("transform", "translate(" + this.margin.left + "," + this.margin.top*2 + ")");
 
 
                 this.svg.call(this.tip);
@@ -54,7 +55,7 @@ module.exports =
                 this.plot.call(this, params, true);
             },
 
-            drawAxis: function (params, x, y, initialize)
+            drawAxis: function (params, x, y)
             {
                 var xAxis = d3.svg.axis().tickSize(0)
                         .scale(x)
@@ -63,7 +64,7 @@ module.exports =
                         .scale(y)
                         .orient("left");
 
-                if (initialize)
+                if (this.initialize === false)
                 {
 
 
@@ -91,17 +92,17 @@ module.exports =
                 }//initial
                 else
                 {
-                    this.selectAll("g.x.axis")
+                    this.svg.selectAll("g.x.axis")
                             .transition()
                             .duration(500).ease("bounce")
                             .call(xAxis);
-                    this.selectAll(".x-axis-label")
+                    this.svg.selectAll(".x-axis-label")
                             .style("text-anchor", "end")
                             .attr("dx", -8)
                             .attr("dy", 8)
 
 
-                    this.selectAll("g.y.axis")
+                    this.svg.selectAll("g.y.axis")
                             .transition()
                             .duration(500).ease("bounce")
                             .call(y);
@@ -112,7 +113,7 @@ module.exports =
 
             },
 
-            plot: function (params, initialize) {
+            plot: function (params) {
 
 
 
@@ -127,7 +128,7 @@ module.exports =
                             })])
                         .range([params.height, 0]);
 
-                this.drawAxis.call(this, params, x, y, initialize);
+                this.drawAxis.call(this, params, x, y);
 
 
 
