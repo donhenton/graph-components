@@ -111,9 +111,6 @@ function drawAxis(params, x, y, initialize)
     }//end update
 
 
-
-
-
 }
 
 
