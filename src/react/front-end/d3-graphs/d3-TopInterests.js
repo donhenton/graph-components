@@ -18,12 +18,12 @@ module.exports =
             tip: d3.tip().attr('class', 'd3-tip').html(function (d) {
                 return d.value;
             }),
-
+            initialize: true,
             graphSelector: null,
 ///
             init: function (initParams)
             {
-                this.initialize = false;
+                 
                 this.tip.direction('e');
                 this.margin = initParams.margin;
                 this.h = initParams.h;
@@ -64,7 +64,7 @@ module.exports =
                         .scale(y)
                         .orient("left");
 
-                if (this.initialize === false)
+                if (this.initialize)
                 {
 
 
