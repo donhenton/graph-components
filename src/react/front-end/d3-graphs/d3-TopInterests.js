@@ -12,6 +12,10 @@ module.exports =
             svg: null,
             chart: null,
             margin: null,
+            xAxis: null,
+            yAxis: null,
+            xScale:null,
+            yScale:null,
             graphWidth: 0,
             graphHeight: 0,
             boxHeight: 0,
@@ -96,13 +100,13 @@ module.exports =
                 this.plot.call(this, params);
             },
 
-            drawAxis: function (params, x, y)
+            drawAxis: function (params)
             {
-                var xAxis = d3.svg.axis().tickSize(0)
-                        .scale(x)
+                this.xAxis = d3.svg.axis().tickSize(0)
+                        .scale(this.xScale)
                         .orient("bottom");
-                var yAxis = d3.svg.axis().tickSize(0)
-                        .scale(y)
+                this.yAxis = d3.svg.axis().tickSize(0)
+                        .scale(this.yScale)
                         .orient("left");
 
 
@@ -110,7 +114,7 @@ module.exports =
                 this.chart.append("g")
                         .classed("x axis", true)
                         .attr("transform", "translate(" + 0 + "," + params.height + ")")
-                        .call(xAxis)
+                        .call(this.xAxis)
                         .selectAll("text")
                         .classed('x-axis-label', true)
                         .style("text-anchor", "center")
@@ -121,7 +125,7 @@ module.exports =
                 this.chart.append("g")
                         .classed("y axis", true)
                         .attr("transform", "translate(0,0)")
-                        .call(yAxis);
+                        .call(this.yAxis);
 
 
                 this.chart.selectAll("g.y.axis text").attr("visibility", "hidden");
@@ -139,18 +143,18 @@ module.exports =
 
 
 
-                var x = d3.scale.ordinal()
+                this.xScale = d3.scale.ordinal()
                         .domain(params.data.map(function (entry) {
                             return entry.key;
                         }))
                         .rangeBands([0, params.width]);
-                var y = d3.scale.linear()
+                this.yScale = d3.scale.linear()
                         .domain([0, d3.max(params.data, function (d) {
                                 return d.value;
                             })])
                         .range([params.height, 0]);
 
-                this.drawAxis.call(this, params, x, y);
+                this.drawAxis.call(this, params);
 
 
 
@@ -164,43 +168,44 @@ module.exports =
                         .on("mouseover", this.tip.show)
                         .on("mouseout", this.tip.hide)
                 var baseLineGroup = this.chart.append('g');
-
+                 var me = this;
                 //the base line
                 baseLineGroup.append("line")
                         .classed("baseline-line", true)
                         .style("stroke", "black")
                         .style("stroke-dasharray", "4,2")
                         .attr("x1", 0)
-                        .attr("y1", y(params.baseline))
+                        .attr("y1", this.yScale(params.baseline))
                         .attr("x2", params.width)
-                        .attr("y2", y(params.baseline));
+                        .attr("y2", this.yScale(params.baseline));
 
                 baseLineGroup.append("text")
                         .classed("baseline-label", true)
                         // .attr("text-anchor", "right")
                         .attr('font-weight', 'bolder')
                         //.attr('font-size','20px')
-                        .attr("transform", "translate(" + (params.width * .9) + "," + (y(params.baseline) - 7) + ")")
+                        .attr("transform", "translate(" + (params.width * .9) 
+                        + "," + (me.yScale(params.baseline) - 7) + ")")
                         .text("Baseline 1.0");
 
-                var me = this;
+               
                 //update
                 this.chart.selectAll(".bar")
 
                         .attr("x", function (d, i) {
                             //this determines the displacement of the bars
-                            return  x(d.key) + x.rangeBand() * .125;
+                            return  me.xScale(d.key) + me.xScale.rangeBand() * .125;
 
                         })
                         .attr("y", function (d, i) {
-                            return  y(d.value) - 1;
+                            return  me.yScale(d.value) - 1;
                         })
                         .attr("height", function (d, i) {
-                            return params.height - y(d.value);
+                            return params.height - me.yScale(d.value);
                         })
                         .attr("width", function (d) {
                             //this determines the width (1-.75)/2 use for x above
-                            return  x.rangeBand() * .75;
+                            return  me.xScale.rangeBand() * .75;
                         })
                         .style("fill", function (d, i) {
                             return me.getColorForBar(i);
