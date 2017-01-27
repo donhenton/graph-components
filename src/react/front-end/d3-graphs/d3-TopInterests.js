@@ -12,7 +12,7 @@ module.exports =
             svg: null,
             chart: null,
             margin: null,
-            w: null,
+            w: null, 
             h: null,
             data: null,
             tip: d3.tip().attr('class', 'd3-tip').html(function (d) {
@@ -23,7 +23,7 @@ module.exports =
 
             computeGraphHeight: function ()
             {
-                return this.h - this.margin.top - this.margin.bottom;
+                return this.boxHeight - this.margin.top - this.margin.bottom;
             },
 
             update: function (newData)
@@ -55,21 +55,21 @@ module.exports =
 
                 this.tip.direction('e');
                 this.margin = initParams.margin;
-                this.h = initParams.h;
+                this.boxHeight = initParams.boxHeight;
                 this.data = initParams.data;
-                this.w = initParams.w;
+                this.boxWidth = initParams.boxWidth;
                 this.graphSelector = initParams.graphSelector;
                 this.svg = d3.select(this.graphSelector).append("svg")
                         .attr("id", "chart")
-                        .attr("width", this.w)
-                        .attr("height", this.h);
+                        .attr("width", this.boxWidth)
+                        .attr("height", this.boxHeight);
                 this.chart = this.svg.append("g")
                         .classed("display", true)
                         .attr("transform", "translate(" + this.margin.left + "," + this.margin.top * 2 + ")");
 
 
                 this.svg.call(this.tip);
-                var width = this.w - this.margin.left - this.margin.right;
+                var width = this.boxWidth - this.margin.left - this.margin.right;
 
 
                 var params =
