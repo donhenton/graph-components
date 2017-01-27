@@ -18,35 +18,64 @@ module.exports =
             tip: d3.tip().attr('class', 'd3-tip').html(function (d) {
                 return d.value;
             }),
-            initialize: true,
+
             graphSelector: null,
+
+            computeGraphHeight: function ()
+            {
+                return this.h - this.margin.top - this.margin.bottom;
+            },
+
+            update: function (newData)
+            {
+                var me = this;
+                var y = d3.scale.linear()
+                        .domain([0, d3.max(newData, function (d) {
+                                return d.value;
+                            })])
+                        .range([params.height, 0]);
+                this.chart.selectAll("g.x.axis")
+                        .transition()
+                        .duration(500).ease("bounce")
+                        .call(me.xAxis);
+                this.chart.selectAll(".x-axis-label")
+                        .style("text-anchor", "end")
+                        .attr("dx", -8)
+                        .attr("dy", 8)
+
+
+                this.chart.selectAll("g.y.axis")
+                        .transition()
+                        .duration(500).ease("bounce")
+                        .call(y);
+            },
 ///
             init: function (initParams)
             {
-                 
+
                 this.tip.direction('e');
                 this.margin = initParams.margin;
                 this.h = initParams.h;
                 this.data = initParams.data;
                 this.w = initParams.w;
-                this.graphSelector = initParams.graphSelector;             
+                this.graphSelector = initParams.graphSelector;
                 this.svg = d3.select(this.graphSelector).append("svg")
                         .attr("id", "chart")
                         .attr("width", this.w)
                         .attr("height", this.h);
                 this.chart = this.svg.append("g")
                         .classed("display", true)
-                         .attr("transform", "translate(" + this.margin.left + "," + this.margin.top*2 + ")");
+                        .attr("transform", "translate(" + this.margin.left + "," + this.margin.top * 2 + ")");
 
 
                 this.svg.call(this.tip);
                 var width = this.w - this.margin.left - this.margin.right;
-                var height = this.h - this.margin.top - this.margin.bottom;
+
 
                 var params =
                         {
                             data: this.data,
-                            height: height,
+                            height: this.computeGraphHeight(),
                             width: width,
                             baseline: 1
 
@@ -64,51 +93,32 @@ module.exports =
                         .scale(y)
                         .orient("left");
 
-                if (this.initialize)
-                {
+
+                //labels for the x axis        
+                this.chart.append("g")
+                        .classed("x axis", true)
+                        .attr("transform", "translate(" + 0 + "," + params.height + ")")
+                        .call(xAxis)
+                        .selectAll("text")
+                        .classed('x-axis-label', true)
+                        .style("text-anchor", "center")
+                        //.attr("dx", -8)
+                        .attr("dy", 20)
 
 
-                    //labels for the x axis        
-                    this.chart.append("g")
-                            .classed("x axis", true)
-                            .attr("transform", "translate(" + 0 + "," + params.height + ")")
-                            .call(xAxis)
-                            .selectAll("text")
-                            .classed('x-axis-label', true)
-                            .style("text-anchor", "center")
-                            //.attr("dx", -8)
-                            .attr("dy", 20)
+                this.chart.append("g")
+                        .classed("y axis", true)
+                        .attr("transform", "translate(0,0)")
+                        .call(yAxis);
 
 
-                    this.chart.append("g")
-                            .classed("y axis", true)
-                            .attr("transform", "translate(0,0)")
-                            .call(yAxis);
+                this.chart.selectAll("g.y.axis text").attr("visibility", "hidden");
 
 
-                    this.chart.selectAll("g.y.axis text").attr("visibility", "hidden");
 
 
-                }//initial
-                else
-                {
-                    this.chart.selectAll("g.x.axis")
-                            .transition()
-                            .duration(500).ease("bounce")
-                            .call(xAxis);
-                    this.chart.selectAll(".x-axis-label")
-                            .style("text-anchor", "end")
-                            .attr("dx", -8)
-                            .attr("dy", 8)
 
 
-                    this.chart.selectAll("g.y.axis")
-                            .transition()
-                            .duration(500).ease("bounce")
-                            .call(y);
-
-                    //update
-                }//end update
 
 
             },
@@ -161,7 +171,7 @@ module.exports =
                         .attr("transform", "translate(" + (params.width * .9) + "," + (y(params.baseline) - 7) + ")")
                         .text("Baseline 1.0");
 
-                 var me = this;       
+                var me = this;
                 //update
                 this.chart.selectAll(".bar")
 
