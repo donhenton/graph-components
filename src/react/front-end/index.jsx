@@ -24,7 +24,7 @@ function run() {
 //use for graph right now
     var data1 = [
         {key: "Food Brands", value: 2},
-        {key: "Award Shows", value: .8},
+        {key: "Award Shows", value: 2.8},
         {key: "Motherhood", value: 1.05}];
     
        
@@ -56,8 +56,8 @@ $('#updateTest').on("click" ,
 function()
 {
        var data2 = [
-        {key: "Manny", value: 5},
-        {key: "Moe", value: 3},
+        {key: "Manny", value: 1.2},
+        {key: "Moe", value: .87},
         {key: "Motherhood", value: .7}];
     
     topInterests.update(data2)

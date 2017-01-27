@@ -80,8 +80,8 @@ module.exports =
                 //update bars
                 
                 //update baseline
-
-
+                 d3.select('.baseline-group') 
+                         .attr("transform", "translate(0," + (me.yScale(this.baseLine)) + ")");
             },
 ///
             init: function (initParams)
@@ -173,7 +173,7 @@ module.exports =
 
                 this.drawAxis.call(this, params);
 
-
+                  var me = this;
 
                 //enter
                 this.chart.selectAll(".bar")
@@ -184,17 +184,19 @@ module.exports =
 
                         .on("mouseover", this.tip.show)
                         .on("mouseout", this.tip.hide)
-                var baseLineGroup = this.chart.append('g');
-                var me = this;
+                var baseLineGroup = this.chart.append('g') 
+                        .classed("baseline-group",true)
+                  .attr("transform", "translate(0," + (me.yScale(this.baseLine)) + ")");
+              
                 //the base line
                 baseLineGroup.append("line")
                         .classed("baseline-line", true)
                         .style("stroke", "black")
                         .style("stroke-dasharray", "4,2")
                         .attr("x1", 0)
-                        .attr("y1", this.yScale(this.baseLine))
+                        .attr("y1", 0)
                         .attr("x2", params.width)
-                        .attr("y2", this.yScale(this.baseLine));
+                        .attr("y2", 0);
 
                 baseLineGroup.append("text")
                         .classed("baseline-label", true)
@@ -202,7 +204,7 @@ module.exports =
                         .attr('font-weight', 'bolder')
                         //.attr('font-size','20px')
                         .attr("transform", "translate(" + (params.width * .9)
-                                + "," + (me.yScale(this.baseLine) - 7) + ")")
+                                + ",-10)")
                         .text("Baseline 1.0");
 
 
