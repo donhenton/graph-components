@@ -52,7 +52,7 @@ console.log("compiling to '"+targetLocation+"'")
 var pageURL = 'http://localhost:8080';
 
 var SASS_FILES = './src/sass/**/*.scss';
-var WATCH_JSX = ['./src/react/**/*.jsx'];
+var WATCH_JSX = ['./src/react/**/*.jsx','./src/react/**/*.js'];
 var MAIN_HTML_FILE = ['./src/html/index.html'];
 
 function Bundle() {
@@ -69,7 +69,7 @@ function Bundle() {
     var Bundler = browserify({
         entries: './src/react/front-end/index.jsx',
         transform: [["babelify", {"presets": ["es2015","react"]}],["envify",{NODE_ENV: envType,'global': true, '_': 'purge', }]],
-        extensions: ['.jsx'],
+        extensions: ['.jsx','.js'],
         debug: debugType,
         cache: {},
         packageCache: {},

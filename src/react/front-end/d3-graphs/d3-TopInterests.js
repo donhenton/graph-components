@@ -19,29 +19,28 @@ module.exports =
                 return d.value;
             }),
 
-            graphSelector = null,
-
+            graphSelector: null,
+///
             init: function (initParams)
             {
                 this.tip.direction('e');
-                margin = initParams.margin;
+                this.margin = initParams.margin;
                 this.h = initParams.h;
                 this.data = initParams.data;
                 this.w = initParams.w;
-                this.graphSelector = initParams.graphSelector;
-                var w = 800;
+                this.graphSelector = initParams.graphSelector;             
                 this.svg = d3.select(this.graphSelector).append("svg")
                         .attr("id", "chart")
-                        .attr("width", w)
-                        .attr("height", h);
+                        .attr("width", this.w)
+                        .attr("height", this.h);
                 this.chart = this.svg.append("g")
                         .classed("display", true)
                         .attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 
 
-                svg.call(this.tip);
-                var width = w - this.margin.left - this.margin.right;
-                var height = h - this.margin.top - this.margin.bottom;
+                this.svg.call(this.tip);
+                var width = this.w - this.margin.left - this.margin.right;
+                var height = this.h - this.margin.top - this.margin.bottom;
 
                 var params =
                         {
@@ -52,7 +51,7 @@ module.exports =
 
 
                         };
-                this.plot.call(this.chart, params, true);
+                this.plot.call(this, params, true);
             },
 
             drawAxis: function (params, x, y, initialize)
@@ -69,7 +68,7 @@ module.exports =
 
 
                     //labels for the x axis        
-                    this.append("g")
+                    this.svg.append("g")
                             .classed("x axis", true)
                             .attr("transform", "translate(" + 0 + "," + params.height + ")")
                             .call(xAxis)
@@ -80,13 +79,13 @@ module.exports =
                             .attr("dy", 20)
 
 
-                    this.append("g")
+                    this.svg.append("g")
                             .classed("y axis", true)
                             .attr("transform", "translate(0,0)")
                             .call(yAxis);
 
 
-                    this.selectAll("g.y.axis text").attr("visibility", "hidden");
+                    this.svg.selectAll("g.y.axis text").attr("visibility", "hidden");
 
 
                 }//initial
@@ -133,7 +132,7 @@ module.exports =
 
 
                 //enter
-                this.selectAll(".bar")
+                this.svg.selectAll(".bar")
                         .data(params.data)
                         .enter()
                         .append("rect")
@@ -141,7 +140,7 @@ module.exports =
 
                         .on("mouseover", this.tip.show)
                         .on("mouseout", this.tip.hide)
-                var baseLineGroup = this.append('g');
+                var baseLineGroup = this.svg.append('g');
 
                 //the base line
                 baseLineGroup.append("line")
@@ -161,9 +160,9 @@ module.exports =
                         .attr("transform", "translate(" + (params.width * .9) + "," + (y(params.baseline) - 7) + ")")
                         .text("Baseline 1.0");
 
-
+                 var me = this;       
                 //update
-                this.selectAll(".bar")
+                this.svg.selectAll(".bar")
 
                         .attr("x", function (d, i) {
                             //this determines the displacement of the bars
@@ -181,11 +180,11 @@ module.exports =
                             return  x.rangeBand() * .75;
                         })
                         .style("fill", function (d, i) {
-                            return getColorForBar(i);
+                            return me.getColorForBar(i);
                         });
 
 
-                this.selectAll(".bar-label")
+                this.svg.selectAll(".bar-label")
                         .transition().duration(500).ease("bounce")
                         .attr("x", function (d, i) {
                             return  x(d.key) + (x.rangeBand() / 2);
@@ -200,12 +199,12 @@ module.exports =
                         });
 
                 //exit()
-                this.selectAll(".bar")
+                this.svg.selectAll(".bar")
                         .data(params.data)
                         .exit()
                         .remove();
 
-                this.selectAll(".bar-label")
+                this.svg.selectAll(".bar-label")
                         .data(params.data)
                         .exit()
                         .remove();
