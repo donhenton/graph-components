@@ -14,8 +14,8 @@ module.exports =
             margin: null,
             graphWidth: 0,
             graphHeight: 0,
-            w: null, 
-            h: null,
+            boxHeight: 0,
+            boxWidth: 0,
             data: null,
             tip: d3.tip().attr('class', 'd3-tip').html(function (d) {
                 return d.value;
