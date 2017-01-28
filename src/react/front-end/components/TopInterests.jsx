@@ -33,7 +33,7 @@ module.exports = React.createClass({
             graphSelector: "#graphLocation"
         }
         
-         $("#graphRow").html('<div className="row" id="graphLocation"></div>');
+         $("#graphRow").html('<div  id="graphLocation"></div>');
 
         topInterests.init(params1);
     },

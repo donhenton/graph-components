@@ -230,34 +230,6 @@ module.exports =
                             return me.getColorForBar(i);
                         });
                 ///end update
-/*
-                this.chart.selectAll(".bar-label")
-                        .transition().duration(500).ease("bounce")
-                        .attr("x", function (d, i) {
-                            return  x(d.key) + (x.rangeBand() / 2);
-                        })
-                        .attr("dx", 0)
-                        .attr("y", function (d, i) {
-                            return  y(d.value);
-                        })
-                        .attr("dy", -6)
-                        .text(function (d) {
-                            return d.value;
-                        });
-
-                //exit()
-                this.chart.selectAll(".bar")
-                        .data(params.data)
-                        .exit()
-                        .remove();
-
-                this.chart.selectAll(".bar-label")
-                        .data(params.data)
-                        .exit()
-                        .remove();
-*/
-
-
 
             }
 
