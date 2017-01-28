@@ -44,7 +44,7 @@ module.exports = {
         var xAxisObj = null;
         var yAxisObj = null;
         var baseLineGroup = null;
-        
+
         var tip = d3.tip().attr('class', 'd3-tip').html(function (d) {
             return d.value;
         });
@@ -85,6 +85,39 @@ module.exports = {
 
         }
 
+        function drawBaseLine(params)
+        {
+            if (!baseLineGroup)
+            {
+                baseLineGroup = chart.append('g')
+                        .classed("baseline-group", true)
+                        .attr("transform", "translate(0," + (yScale(baseLine)) + ")");
+
+                //the base line
+                baseLineGroup.append("line")
+                        .classed("baseline-line", true)
+                        .style("stroke", "black")
+                        .style("stroke-dasharray", "4,2")
+                        .attr("x1", 0)
+                        .attr("y1", 0)
+                        .attr("x2", params.width)
+                        .attr("y2", 0);
+
+                baseLineGroup.append("text")
+                        .classed("baseline-label", true)
+                        // .attr("text-anchor", "right")
+                        .attr('font-weight', 'bolder')
+                        //.attr('font-size','20px')
+                        .attr("transform", "translate(" + (params.width * .9)
+                                + ",-10)")
+                        .text("Baseline 1.0");
+            } else
+            {
+                d3.select('.baseline-group')
+                        .attr("transform", "translate(0," + (yScale(baseLine)) + ")");
+            }
+        }
+
         function  drawAxis(params)
         {
             xAxis = d3.svg.axis().tickSize(0)
@@ -110,9 +143,9 @@ module.exports = {
             if (!yAxisObj)
             {
 
-             yAxisObj = chart.append("g")
-                    .classed("y axis", true)
-                    .attr("transform", "translate(0,0)");
+                yAxisObj = chart.append("g")
+                        .classed("y axis", true)
+                        .attr("transform", "translate(0,0)");
             }
 
             yAxisObj.call(yAxis);
@@ -153,29 +186,7 @@ module.exports = {
 
                     .on("mouseover", tip.show)
                     .on("mouseout", tip.hide)
-           baseLineGroup = chart.append('g')
-                    .classed("baseline-group", true)
-                    .attr("transform", "translate(0," + (yScale(baseLine)) + ")");
-
-            //the base line
-            baseLineGroup.append("line")
-                    .classed("baseline-line", true)
-                    .style("stroke", "black")
-                    .style("stroke-dasharray", "4,2")
-                    .attr("x1", 0)
-                    .attr("y1", 0)
-                    .attr("x2", params.width)
-                    .attr("y2", 0);
-
-            baseLineGroup.append("text")
-                    .classed("baseline-label", true)
-                    // .attr("text-anchor", "right")
-                    .attr('font-weight', 'bolder')
-                    //.attr('font-size','20px')
-                    .attr("transform", "translate(" + (params.width * .9)
-                            + ",-10)")
-                    .text("Baseline 1.0");
-
+            drawBaseLine(params);
 
             //update
             chart.selectAll(".bar")
@@ -217,7 +228,7 @@ module.exports = {
 
                     };
 
-            plot(paramsNew)
+            plot(paramsNew);
         };
         return exports;
 
