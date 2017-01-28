@@ -2,6 +2,30 @@
 
 module.exports = {
 
+    /**
+     * initiaLization method
+     * 
+     * initParams
+     * 
+     *      margin: { top: 20,bottom: 70,left: 30,right: 30}, //margins within box
+            boxHeight: 450, //height overall
+            data: dataSample, see below
+            boxWidth: 800, //width overall
+            graphSelectorId: eg "graphLocation" the id assigned to the d3 graph
+     * 
+     * 
+     * var dataSample = [
+                {key: "Manny", value: 1.2},
+                {key: "Moe", value: .87},
+                {key: "Motherhood", value: .7}];
+    
+        the keys must be unique for updates to function properly
+    
+     * 
+     * 
+     * 
+     * 
+     */
     init: function (initParams)
     {
         var svg = null;
@@ -90,7 +114,12 @@ module.exports = {
 
         }//end draw axis
 
-
+        /**
+         * update the graph, this is public
+         * 
+         * @param {type} newData
+         * @returns {undefined}
+         */
         function update(newData)
         {
              xScale.domain(newData.map(function (entry) {
@@ -151,7 +180,11 @@ module.exports = {
 ///
 
 
-
+    /**
+     * plot the initial graph 
+     * @param {type} params
+     * @returns {undefined}
+     */
         function  plot(params) {
 
 
