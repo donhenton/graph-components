@@ -32,6 +32,8 @@ module.exports = React.createClass({
             boxWidth: 800,
             graphSelector: "#graphLocation"
         }
+        
+         $("#graphRow").html('<div className="row" id="graphLocation"></div>');
 
         topInterests.init(params1);
     },
@@ -49,9 +51,9 @@ module.exports = React.createClass({
 
     render: function () {
         return (
-                <div className="row">
+                <div id="graphRow" className="row">
                      
-                    <div className="row" id="graphLocation"></div>
+                   
                 </div>
                 )
     }
