@@ -41,6 +41,10 @@ module.exports = {
         var baseLine = 1;
         var boxWidth = 0;
         var data = null;
+        var xAxisObj = null;
+        var yAxisObj = null;
+        var baseLineGroup = null;
+        
         var tip = d3.tip().attr('class', 'd3-tip').html(function (d) {
             return d.value;
         });
@@ -89,111 +93,32 @@ module.exports = {
             yAxis = d3.svg.axis().tickSize(0)
                     .scale(yScale)
                     .orient("left");
-            var XaxisItems = chart.selectAll("g.x.axis").data(params.data);
-            XaxisItems.call(xAxis)
-                    .selectAll("g.x.axis text")
-                    .classed('x-axis-label', true)
-                    .style("text-anchor", "center")
-                    //.attr("dx", -8)
-                    .attr("dy", 20).transition();
 
-
-            //labels for the x axis        
-            XaxisItems.enter().append("g")
-                    .classed("x axis", true)
-                    .attr("transform", "translate(" + 0 + "," + params.height + ")")
-                    .call(xAxis)
+            if (!xAxisObj)
+            {
+                //labels for the x axis        
+                xAxisObj = chart.append("g")
+                        .classed("x axis", true)
+                        .attr("transform", "translate(" + 0 + "," + params.height + ")");
+            }
+            xAxisObj.call(xAxis)
                     .selectAll("text")
                     .classed('x-axis-label', true)
                     .style("text-anchor", "center")
                     //.attr("dx", -8)
                     .attr("dy", 20)
+            if (!yAxisObj)
+            {
 
-            XaxisItems.exit().remove();
-            //     chart.selectAll("g.y.axis text").attr("visibility", "hidden");
-
-            /////
-            //Y axis
-            var YaxisItems = chart.selectAll("g.y.axis").data(params.data);
-            XaxisItems.enter().append("g")
+             yAxisObj = chart.append("g")
                     .classed("y axis", true)
-                    .attr("transform", "translate(0,0)")
-                    .call(yAxis);
+                    .attr("transform", "translate(0,0)");
+            }
 
-//           XaxisItems.transition() 
-//                    .call(yAxis);         
-
-
-
+            yAxisObj.call(yAxis);
 
 
         }//end draw axis
-
-        /**
-         * update the graph, this is public
-         * 
-         * @param {type} newData
-         * @returns {undefined}
-         */
-        function update(newData)
-        {
-//             xScale.domain(newData.map(function (entry) {
-//                return entry.key;
-//            }))
-            chart.select("g.x.axis").call(xAxis)
-                    .selectAll("g.x.axis text")
-                    .classed('x-axis-label', true)
-                    .style("text-anchor", "center")
-                    //.attr("dx", -8)
-                    .attr("dy", 20).transition();
-//             yScale = d3.scale.linear()
-//                    .domain([0, d3.max(newData, function (d) {
-//                            return d.value;
-//                        })])
-//                    .range([ graphHeight, 0]);
-
-            yAxis = d3.svg.axis().tickSize(0)
-                    .scale(yScale)
-                    .orient("left");
-
-            d3.select('g.y.axis').call(yAxis);
-
-            //update bars
-
-            var newBars = chart.selectAll(".bar").data(newData)
-            newBars.
-                    transition()
-                    .attr("x", function (d, i) {
-                        //this determines the displacement of the bars
-                        return  xScale(d.key) + (xScale.rangeBand() * .125);
-
-
-
-                    })
-                    .attr("y", function (d, i) {
-                        return   yScale(d.value) - 1;
-                    })
-                    .attr("height", function (d, i) {
-                        return  graphHeight - yScale(d.value);
-                    })
-                    .attr("width", function (d) {
-                        //this determines the width (1-.75)/2 use for x above
-                        return   xScale.rangeBand() * .75;
-                    })
-                    .style("fill", function (d, i) {
-                        return  getColorForBar(i);
-                    });
-
-            //update bars
-
-            //update baseline
-            d3.select('.baseline-group')
-                    .attr("transform", "translate(0," + (yScale(baseLine)) + ")");
-
-
-        }//end update
-///
-
 
         /**
          * plot the initial graph 
@@ -228,7 +153,7 @@ module.exports = {
 
                     .on("mouseover", tip.show)
                     .on("mouseout", tip.hide)
-            var baseLineGroup = chart.append('g')
+           baseLineGroup = chart.append('g')
                     .classed("baseline-group", true)
                     .attr("transform", "translate(0," + (yScale(baseLine)) + ")");
 
