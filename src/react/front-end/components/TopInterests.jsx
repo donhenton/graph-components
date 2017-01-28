@@ -15,6 +15,8 @@ module.exports = React.createClass({
 
     },
 
+    graphUpdater: null,
+
     componentDidMount: function () {
 
 
@@ -30,12 +32,14 @@ module.exports = React.createClass({
             boxHeight: 450,
             data: this.state.data,
             boxWidth: 800,
-            graphSelector: "#graphLocation"
+            graphSelectorId: "graphLocation"
         }
-        
-         $("#graphRow").html('<div  id="graphLocation"></div>');
 
-        topInterests.init(params1);
+        $("#graphRow").html('<div  id="'+params1.graphSelectorId+'"></div>');
+         
+        
+            this.graphUpdater = topInterests.init(params1);
+         
     },
 
     formatData(d)
@@ -46,14 +50,14 @@ module.exports = React.createClass({
     componentWillReceiveProps: function (nextProps) {
         var newData = this.formatData(nextProps.data);
         this.setState({data: newData});
-        topInterests.update(newData)
+        this.graphUpdater.update(newData)
     },
 
     render: function () {
         return (
                 <div id="graphRow" className="row">
-                     
-                   
+                
+                
                 </div>
                 )
     }
