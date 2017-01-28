@@ -24,7 +24,7 @@ module.exports = React.createClass({
 
     changeData: function ()
     {
-        var d = null;
+         
         if (this.state.flip)
         {
 
