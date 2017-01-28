@@ -1,0 +1,321 @@
+/****************
+Reset
+****************/
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+@import url(https://fonts.googleapis.com/css?family=Palanquin:400,700);
+@import url(https://fonts.googleapis.com/css?family=Orbitron:400,700|Roboto:400,700italic,700);
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+/*body {
+  line-height: 1.4;
+  font-family: Arial, Helvetica, sans-serif;
+}*/
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+:focus {
+  outline: none; }
+
+strong {
+  font-weight: bold; }
+
+/* micro clear fix */
+.grouping:before,
+.grouping:after {
+  content: " ";
+  display: table; }
+
+.grouping:after {
+  clear: both; }
+
+img, iframe, video, object {
+  max-width: 100%; }
+
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+/*------------end reset.scss-------------------*/
+/* typography ---------------------- */
+/* font-family 'Palanquin' sans serif */
+/* colors */
+/* ------ */
+body {
+  font-family: Roboto, Arial, Sans-Serif;
+  font-size: 14px;
+  font-weight: 400; }
+
+h1 {
+  font-size: 40px;
+  font-weight: 700;
+  color: #16174f; }
+
+h2 {
+  font-size: 32px;
+  font-weight: Normal;
+  color: #963019; }
+
+h3 {
+  font-size: 25px;
+  font-weight: Normal;
+  color: #667467; }
+
+h4 {
+  font-size: 18px;
+  font-weight: Normal;
+  color: #667467; }
+
+/* typography ---------------------- */
+.btn {
+  outline: none;
+  -webkit-border-radius: 12;
+  -moz-border-radius: 12;
+  border-radius: 12px;
+  font-size: 15px;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+  border-style: none;
+  background-color: #f6f1ed;
+  cursor: pointer;
+  color: white; }
+  .btn.btn-small {
+    font-size: 12px;
+    padding: 2px 10px; }
+  .btn.btn-large {
+    font-size: 18px; }
+  .btn.btn-primary {
+    background-color: #16174f; }
+    .btn.btn-primary:hover {
+      background-color: #3e48d1; }
+  .btn.btn-inverse {
+    background-color: #f6f1ed;
+    color: #667467;
+    border: solid #667467 1px; }
+    .btn.btn-inverse:hover {
+      background-color: #e0cec0;
+      color: #f6f1ed; }
+  .btn.btn-red {
+    background-color: #963019; }
+    .btn.btn-red:hover {
+      background-color: #d64120; }
+
+.pull-right {
+  float: right; }
+
+.pull-left {
+  float: left; }
+
+.clear {
+  clear: both; }
+
+.bold {
+  font-weight: bold; }
+
+.hidden,
+.hide {
+  display: none; }
+
+.relative {
+  position: relative; }
+
+.absolute {
+  position: absolute; }
+
+.block {
+  display: block; }
+
+.inline-block {
+  display: inline-block; }
+
+.text-centered {
+  text-align: center; }
+
+.space-left {
+  margin-left: 10px; }
+
+.space-right {
+  margin-right: 10px; }
+
+.columnLeft {
+  width: 50%;
+  float: left;
+  padding: 10px; }
+
+.columnRight {
+  width: 50%;
+  float: right;
+  padding: 10px; }
+
+.red-color {
+  background-color: #963019;
+  color: #f6f1ed; }
+
+.red-content {
+  color: #963019; }
+
+.green-content {
+  color: #667467; }
+
+.white-content {
+  color: white; }
+
+.blue-content {
+  color: #16174f; }
+
+.green-color {
+  background-color: #667467;
+  color: #f6f1ed; }
+
+.reverse-red-color {
+  background-color: #f6f1ed;
+  color: #963019; }
+
+.reverse-green-color {
+  background-color: #f6f1ed;
+  color: #667467; }
+
+.row {
+  clear: both;
+  margin-top: 25px; }
+
+ul.basic-list {
+  list-style-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10"><circle fill="#963019" cx="5" cy="5" r="4"/></svg>');
+  color: #16174f; }
+
+em {
+  font-family: Orbitron, Arial, Sans-Serif;
+  font-size: 12px;
+  font-weight: 400;
+  font-style: italic; }
+
+b {
+  font-family: Roboto, Arial, Sans-Serif;
+  font-size: 14px;
+  font-weight: 700; }
+
+.icon.icon-large {
+  font-size: 24px;
+  position: relative;
+  top: 5px; }
+
+.icon.icon-small {
+  font-size: 18px;
+  position: relative;
+  top: 1px; }
+
+.well {
+  background-color: #f6f1ed;
+  position: relative;
+  border: 3px solid white;
+  border-radius: 10px 10px;
+  padding: 15px; }
+
+.form input, .form select radio, .form fieldset {
+  display: inline-table;
+  margin: 5px;
+  padding: 5px; }
+  .form input.btn, .form select radio.btn, .form fieldset.btn {
+    padding: 0 16px;
+    vertical-align: center; }
+
+.form label {
+  color: #667467; }
+
+.form input[type=text], .form textarea, .form select, .form radio, .form radioGroup, .form input[type=submit] {
+  -webkit-transition: all 0.30s ease-in-out;
+  -moz-transition: all 0.30s ease-in-out;
+  -ms-transition: all 0.30s ease-in-out;
+  -o-transition: all 0.30s ease-in-out;
+  outline: none;
+  border: 1px solid #667467;
+  height: 25px; }
+
+.form input[type=text]:focus, .form textarea:focus, .form select:focus, .form radio:focus, .form radioGroup:focus, .form input[type=submit]:focus {
+  box-shadow: 0 0 5px #963019;
+  border: 1px solid #963019; }
+
+.form.inline-form fieldset {
+  border: thin solid #667467; }
+
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  font-size: 0.95em;
+  text-align: center; }
+
+#chart {
+  border: 1px solid #CCC; }
+
+/* the axis of the graph */
+.axis path {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.5px;
+  shape-rendering: crispEdges; }
+
+/* d3 tip ///////////////////////////////////////////////////////////// */
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: black;
+  color: #fff;
+  border-radius: 2px;
+  pointer-events: none;
+  /* Creates a small triangle extender for the tooltip */
+  /* Eastward tooltips */ }
+  .d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 15px;
+    width: 100%;
+    line-height: 1;
+    color: black;
+    position: absolute;
+    pointer-events: none; }
+  .d3-tip.e:after {
+    content: "\25C0";
+    margin: -4px 0 0 0;
+    top: 46%;
+    left: -58%; }
