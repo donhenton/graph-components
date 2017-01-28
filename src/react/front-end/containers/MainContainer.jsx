@@ -1,25 +1,55 @@
 var React = require('react');
 var TopInterests = require('./../components/TopInterests')
 
+var data1 = [
+    {key: "Food Brands", value: 2},
+    {key: "Award Shows", value: 2.8},
+    {key: "Motherhood", value: 1.05}];
+var data2 = [
+    {key: "Manny", value: 1.2},
+    {key: "Moe", value: .87},
+    {key: "Motherhood", value: .7}];
 
 module.exports = React.createClass({
-    
-    
-    
-    getInitialState: function(){
-        
-      return {};
+
+    getInitialState: function () {
+
+        return {flip: 0, data: data1};
     },
 
-    componentWillMount: function(){
-         
+    componentWillMount: function () {
+
     },
-    
-    data: {"alpha":100},
-    
+
+
+    changeData: function ()
+    {
+        var d = null;
+        if (this.state.flip)
+        {
+
+            this.setState({flip: 0, data: data1});
+        } else
+        {
+            this.setState({flip: 1, data: data2});
+        }
+
+
+    },
+
     render: function () {
-         return (
-                   <TopInterests data={this.data} />
+        return (
+                <section>
+                    <div className="row">
+                        <button onClick={this.changeData} className="btn btn-primary">Change Data</button>
+                    </div>
+                    <div className="row">
+                        <TopInterests data={this.state.data} />
+                    </div>
+                    
+                </section>
+
+
                 )
     }
 });

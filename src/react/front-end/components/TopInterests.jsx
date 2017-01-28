@@ -2,7 +2,7 @@ var React = require('react');
 var d3 = require('d3');
 var _ = require('lodash');
 var Extend = require('extend');
-
+var topInterests = require("./../d3-graphs/d3-TopInterests");
 
 module.exports = React.createClass({
 
@@ -14,22 +14,44 @@ module.exports = React.createClass({
     componentWillMount: function () {
 
     },
-    
+
+    componentDidMount: function () {
+
+
+        var margin = {
+            top: 20,
+            bottom: 70,
+            left: 30,
+            right: 30
+        };
+        var params1 = {
+
+            margin: margin,
+            boxHeight: 450,
+            data: this.state.data,
+            boxWidth: 800,
+            graphSelector: "#graphLocation"
+        }
+
+        topInterests.init(params1);
+    },
+
     formatData(d)
     {
         return d;
     },
 
     componentWillReceiveProps: function (nextProps) {
-        this.setState({data: this.formatData(nextProps.data)});
+        var newData = this.formatData(nextProps.data);
+        this.setState({data: newData});
+        topInterests.update(newData)
     },
-
-    
 
     render: function () {
         return (
-                <div className="top-interests">
-                    Data is  {this.state.data.alpha}
+                <div className="row">
+                     
+                    <div className="row" id="graphLocation"></div>
                 </div>
                 )
     }
