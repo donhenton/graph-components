@@ -8,19 +8,19 @@ module.exports = {
      * initParams
      * 
      *      margin: { top: 20,bottom: 70,left: 30,right: 30}, //margins within box
-     boxHeight: 450, //height overall
-     data: dataSample, see below
-     boxWidth: 800, //width overall
-     graphSelectorId: eg "graphLocation" the id assigned to the d3 graph
+            boxHeight: 450, //height overall
+            data: dataSample, see below
+            boxWidth: 800, //width overall
+            graphSelectorId: eg "graphLocation" the id assigned to the d3 graph
      * 
      * 
      * var dataSample = [
-     {key: "Manny", value: 1.2},
-     {key: "Moe", value: .87},
-     {key: "Motherhood", value: .7}];
-     
-     the keys must be unique for updates to function properly
-     
+                {key: "Manny", value: 1.2},
+                {key: "Moe", value: .87},
+                {key: "Motherhood", value: .7}];
+    
+        the keys must be unique for updates to function properly
+    
      * 
      * 
      * 
@@ -52,7 +52,7 @@ module.exports = {
         data = initParams.data;
         boxWidth = initParams.boxWidth;
         graphSelectorId = initParams.graphSelectorId;
-        svg = d3.select("#" + graphSelectorId).append("svg")
+        svg = d3.select("#"+graphSelectorId).append("svg")
                 .attr("id", "chart")
                 .attr("width", boxWidth)
                 .attr("height", boxHeight);
@@ -89,17 +89,10 @@ module.exports = {
             yAxis = d3.svg.axis().tickSize(0)
                     .scale(yScale)
                     .orient("left");
-            var XaxisItems = chart.selectAll("g.x.axis").data(params.data);
-            XaxisItems.call(xAxis)
-                    .selectAll("g.x.axis text")
-                    .classed('x-axis-label', true)
-                    .style("text-anchor", "center")
-                    //.attr("dx", -8)
-                    .attr("dy", 20).transition();
 
 
             //labels for the x axis        
-            XaxisItems.enter().append("g")
+            chart.append("g")
                     .classed("x axis", true)
                     .attr("transform", "translate(" + 0 + "," + params.height + ")")
                     .call(xAxis)
@@ -109,22 +102,14 @@ module.exports = {
                     //.attr("dx", -8)
                     .attr("dy", 20)
 
-            XaxisItems.exit().remove();
-            //     chart.selectAll("g.y.axis text").attr("visibility", "hidden");
 
-            /////
-            //Y axis
-            var YaxisItems = chart.selectAll("g.y.axis").data(params.data);
-            XaxisItems.enter().append("g")
+            chart.append("g")
                     .classed("y axis", true)
                     .attr("transform", "translate(0,0)")
                     .call(yAxis);
 
-//           XaxisItems.transition() 
-//                    .call(yAxis);         
 
-
-
+            //     chart.selectAll("g.y.axis text").attr("visibility", "hidden");
 
 
         }//end draw axis
@@ -137,35 +122,35 @@ module.exports = {
          */
         function update(newData)
         {
-//             xScale.domain(newData.map(function (entry) {
-//                return entry.key;
-//            }))
-            chart.select("g.x.axis").call(xAxis)
+             xScale.domain(newData.map(function (entry) {
+                return entry.key;
+            }))
+             chart.select("g.x.axis").call( xAxis)
                     .selectAll("g.x.axis text")
                     .classed('x-axis-label', true)
                     .style("text-anchor", "center")
                     //.attr("dx", -8)
                     .attr("dy", 20).transition();
-//             yScale = d3.scale.linear()
-//                    .domain([0, d3.max(newData, function (d) {
-//                            return d.value;
-//                        })])
-//                    .range([ graphHeight, 0]);
+             yScale = d3.scale.linear()
+                    .domain([0, d3.max(newData, function (d) {
+                            return d.value;
+                        })])
+                    .range([ graphHeight, 0]);
 
-            yAxis = d3.svg.axis().tickSize(0)
-                    .scale(yScale)
+             yAxis = d3.svg.axis().tickSize(0)
+                    .scale( yScale)
                     .orient("left");
 
-            d3.select('g.y.axis').call(yAxis);
+            d3.select('g.y.axis').call( yAxis)
 
             //update bars
-
-            var newBars = chart.selectAll(".bar").data(newData)
+             
+            var newBars =  chart.selectAll(".bar").data(newData)
             newBars.
                     transition()
                     .attr("x", function (d, i) {
                         //this determines the displacement of the bars
-                        return  xScale(d.key) + (xScale.rangeBand() * .125);
+                        return  xScale(d.key) + ( xScale.rangeBand() * .125);
 
 
 
@@ -174,7 +159,7 @@ module.exports = {
                         return   yScale(d.value) - 1;
                     })
                     .attr("height", function (d, i) {
-                        return  graphHeight - yScale(d.value);
+                        return  graphHeight -  yScale(d.value);
                     })
                     .attr("width", function (d) {
                         //this determines the width (1-.75)/2 use for x above
@@ -188,18 +173,18 @@ module.exports = {
 
             //update baseline
             d3.select('.baseline-group')
-                    .attr("transform", "translate(0," + (yScale(baseLine)) + ")");
-
-
+                    .attr("transform", "translate(0," + ( yScale( baseLine)) + ")");
+        
+        
         }//end update
 ///
 
 
-        /**
-         * plot the initial graph 
-         * @param {type} params
-         * @returns {undefined}
-         */
+    /**
+     * plot the initial graph 
+     * @param {type} params
+     * @returns {undefined}
+     */
         function  plot(params) {
 
 
@@ -282,18 +267,7 @@ module.exports = {
 
         ////////////////////////////////////////////////////////////////////
         exports = function () {}
-        exports.update = function (newData) {
-            var paramsNew =
-                    {
-                        data: newData,
-                        height: graphHeight,
-                        width: graphWidth
-
-
-                    };
-
-            plot(paramsNew)
-        };
+        exports.update = function(newData) { update(newData) };
         return exports;
 
 
