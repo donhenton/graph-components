@@ -38,7 +38,7 @@ module.exports = {
         var graphWidth = 0;
         var graphHeight = 0;
         var boxHeight = 0;
-        var baseLine = 1;
+        var baseLine = 1; //the numerical value assigned to baseLine
         var boxWidth = 0;
         var data = null;
         var xAxisObj = null;
@@ -81,7 +81,7 @@ module.exports = {
         function  getColorForBar(i)
         {
 
-            return '#ddd'
+            return '#ddd';
 
         }
 
@@ -176,26 +176,29 @@ module.exports = {
             drawAxis.call(this, params);
 
             var me = this;
-
+            var barItems =  chart.selectAll(".bar")
+                    .data(params.data);
             //enter
-            chart.selectAll(".bar")
-                    .data(params.data)
+            barItems
                     .enter()
                     .append("rect")
                     .classed("bar", true)
-
                     .on("mouseover", tip.show)
                     .on("mouseout", tip.hide)
             drawBaseLine(params);
 
             //update
-            chart.selectAll(".bar")
-
+            barItems
+                     .style("fill", function (d, i) {
+                        return  getColorForBar(i);
+                    }) 
                     .attr("x", function (d, i) {
                         //this determines the displacement of the bars
                         return   xScale(d.key) + xScale.rangeBand() * .125;
 
-                    })
+                    }).transition()
+                    .duration(500)
+                    .delay(100)
                     .attr("y", function (d, i) {
                         return   yScale(d.value) - 1;
                     })
@@ -206,9 +209,7 @@ module.exports = {
                         //this determines the width (1-.75)/2 use for x above
                         return   xScale.rangeBand() * .75;
                     })
-                    .style("fill", function (d, i) {
-                        return  getColorForBar(i);
-                    });
+            barItems.exit().remove();
             ///end update
 
         }//plot
