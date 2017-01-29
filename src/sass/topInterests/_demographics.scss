@@ -71,4 +71,21 @@ $number-bkg-color: #000000;
         }
 
     }
+    
+    
+    #languagePie
+    {
+        .legend-text
+        {
+            font-size: 1rem;
+            &.main
+            {
+                font-weight: bolder;
+                font-size: 1.2rem;
+            }
+        }
+        
+        
+    }
+    
 }

@@ -8,7 +8,7 @@ module.exports = {
      * @param {type} data an array of 
      * 
      *  
-            {"name": "US", "percentage": 61, color: '#F79221'},
+     {"name": "US", "percentage": 61, color: '#F79221'},
      *      colors must be unique as they are the key
      * 
      * @returns {nm$_d3-Demographics.exports}
@@ -29,16 +29,17 @@ module.exports = {
         var radius = 0.85 * radius;
         var svg = d3.select(element).append('svg')
                 .attr('id', id)
-                .attr('width', props.width + 300)
+                .attr('width', props.width+200)
                 .attr('height', props.height)
-        svgGroup = svg
-                //.attr("style", "display:block; margin: 0 auto;")
-                .append("g")
-                .attr("transform", "translate(" + (radius + 10) + "," + radius + ")");
+        
+        var baseGroup = svg.append('g').classed("base-group",true) 
+                
+        svgGroup = baseGroup
+                .attr("transform", "translate(" + (radius + 10) + "," + (radius+20) + ")");
         var arc = d3.svg.arc()
                 .outerRadius(radius - 5)
                 .innerRadius(0);
-       
+
         var keyfunctionP = function (d) {
             if (d.color)
             {
@@ -54,99 +55,124 @@ module.exports = {
         var keyfunction = keyfunctionP.bind(this)
         build(data);
 
-   
-
-    function build(data)
-    {
-
-        
-        var pie = d3.layout.pie()
-                .value(function (d) {
-                    return d.percentage;
-                })
-                .sort(function (d1, d2) {
-                    return d1.percentage > d2.percentage
-                });
-        var arcs = pie(data);
-        var pieWithData =  svgGroup.selectAll('path').data(arcs, keyfunction);
-        pieWithData.enter().append('path')
-                .attr("d", arc)
-                .each(function (d) {
-                    this._current = d;
-                })
-                .attr("fill", function (d) {
-                    return d.data.color
-                })
-
-        //////////// outer text labels /////////////////
-        var textWithData = svgGroup.selectAll("text").data(arcs, keyfunction);
-        
 
 
-        ////exit ////////////////////////////////////////////////
-        textWithData.exit().remove();
-        pieWithData.exit().remove();
-        setTransitionsForSlices(pieWithData);
-        
-        createLegend(data);
+        function build(data)
+        {
 
 
-    }
+            var pie = d3.layout.pie()
+                    .value(function (d) {
+                        return d.percentage;
+                    })
+                    .sort(function (d1, d2) {
+                        return d1.percentage > d2.percentage
+                    });
+            var arcs = pie(data);
+            var pieWithData = svgGroup.selectAll('path').data(arcs, keyfunction);
+            pieWithData.enter().append('path')
+                    .attr("d", arc)
+                    .each(function (d) {
+                        this._current = d;
+                    })
+                    .attr("fill", function (d) {
+                        return d.data.color
+                    })
 
-    function createLegend(data)
-    {
-        data = data.sort(function(a,b){return a.percentage < b.percentage})
-        var self = this;
-        var legendGroup = svg.append('g').attr("class", 'legend-group')
-        var textGroup = svg.selectAll("text.legend-text").data(data, keyfunction);
-         
- 
+            //////////// outer text labels /////////////////
+            var textWithData = svgGroup.selectAll("text").data(arcs, keyfunction);
 
-        textGroup.enter()
-                .append("text")
-                .attr("class", 'legend-text')
-                .attr("text-anchor", "left")
-                .attr("fill-opacity",1)
-                .attr("fill", "black")
-                .attr("font-size", "15px")
-                .attr('transform', function (d, i)
-                {
-                    return "translate( 220, " + (50 + (i * 30)) + ")"
-                })
-                .text(function (d) {
-                    return d.name + " (" + d.percentage + "%)";
-                });
-                
-        textGroup.transition().duration(200).attr("fill-opacity",.5)        
-         .text(function (d) {
-                    return d.name + " (" + d.percentage + "%)";
-                }).attr("fill", "red") 
-         .transition().duration(600).attr("fill-opacity",1).attr("fill", "black")           
-        textGroup.exit().remove();
-        
 
-    }
 
-    
+            ////exit ////////////////////////////////////////////////
+            textWithData.exit().remove();
+            pieWithData.exit().remove();
+            setTransitionsForSlices(pieWithData);
 
-    function setTransitionsForSlices(pieWithData)
-    {
-        var self = this;
-        function cv_arcTween(a) {
-            var i = d3.interpolate(this._current, a);
-            var _current = i(0);
-            return function (t) {
-                return arc(i(t));
-            };
+            createLegend(data);
+
+
         }
 
-        pieWithData.transition().duration(delay).attrTween("d", cv_arcTween);
+        function createLegend(data)
+        {
+            data = data.sort(function (a, b) {
+                return a.percentage < b.percentage
+            })
+            var self = this;
+            var legendGroup = baseGroup.append('g').attr("class", 'legend-group');
+            legendGroup.attr("transform", "translate(" + (radius + 20) + ","+(-radius)+")")
+            var textGroup = legendGroup.selectAll("text.legend-text").data(data, keyfunction);
 
 
-    }
- 
-    
-         ////////////////////////////////////////////////////////////////////
+
+            textGroup.enter()
+                    .append("text")
+                    .attr("class", 'legend-text')
+                    .attr("text-anchor", "left")
+                    .attr("fill-opacity", 1)
+
+                    .attr('fill', function (d, i)
+                    {
+                        return d.color;
+
+                    })
+                     
+                    .attr("class",function (d, i)
+                    {
+                       var legendText = 'legend-text ';
+                       if (i === 0)
+                       {
+                           return legendText+' main'
+                       }
+                       return legendText;
+
+                    })
+                    .attr('transform', function (d, i)
+                    {
+                        return "translate(0," + (50 + (i * 30)) + ")"
+
+                    })
+                    .text(function (d) {
+                        return   d.percentage + "% " + d.name;
+                    });
+            /*        
+             textGroup.transition().duration(200).attr("fill-opacity",.5)        
+             .text(function (d) {
+             return   d.percentage + "% "+d.name ;
+             }).attr("fill", "red") 
+             .transition().duration(600).attr("fill-opacity",1)
+             .attr('fill', function (d, i)
+             {
+             return d.color;
+             
+             })  
+             */
+            textGroup.exit().remove();
+
+
+        }
+
+
+
+        function setTransitionsForSlices(pieWithData)
+        {
+            var self = this;
+            function cv_arcTween(a) {
+                var i = d3.interpolate(this._current, a);
+                var _current = i(0);
+                return function (t) {
+                    return arc(i(t));
+                };
+            }
+
+            pieWithData.transition().duration(delay).attrTween("d", cv_arcTween);
+
+
+        }
+
+
+        ////////////////////////////////////////////////////////////////////
         exports = function () {}
         exports.update = function (newData) {
 
@@ -159,6 +185,6 @@ module.exports = {
 
 
     }, // end init
-    
+
 
 }
