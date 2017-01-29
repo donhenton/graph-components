@@ -1,5 +1,6 @@
 var React = require('react');
 var TopInterests = require('./../components/TopInterests')
+var Demographics = require('./../components/Demographics')
 
 var data1 = [
     {key: "Food Brands", value: 2},
@@ -39,6 +40,11 @@ module.exports = React.createClass({
 
     render: function () {
         return (
+                <div>
+                <h3>Demographics</h3>
+                <Demographics />
+                <hr/>
+                <h3>Top Interests</h3>
                 <section>
                     <div className="row">
                         <button onClick={this.changeData} className="btn btn-primary">Change Data</button>
@@ -48,7 +54,7 @@ module.exports = React.createClass({
                     </div>
                     
                 </section>
-
+                </div>
 
                 )
     }
