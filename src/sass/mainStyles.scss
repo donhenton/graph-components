@@ -2,7 +2,7 @@
 @import "components/typography";
 @import "components/buttons";
 @import "components/modular";
-
+@import "topInterests/topInterests";
 
 
 body,html{
@@ -12,57 +12,4 @@ body,html{
     font-size: 0.95em;
     text-align: center;
 }
-#chart{
 
-    border: 1px solid #CCC;
-}
-
-/* the axis of the graph */
-.axis path{
-    fill: none;
-    stroke: black;
-    stroke-width: 1.5px;
-    shape-rendering: crispEdges;
-}
-
-
-
-/* d3 tip ///////////////////////////////////////////////////////////// */
-.d3-tip {
-    line-height: 1;
-    font-weight: bold;
-    padding: 12px;
-    background: rgba(0, 0, 0, 1);
-    color: #fff;
-    border-radius: 2px;
-    pointer-events: none;
-
-
-    /* Creates a small triangle extender for the tooltip */
-    &:after {
-        box-sizing: border-box;
-        display: inline;
-        font-size: 15px;
-        width: 100%;
-        line-height: 1;
-        color: rgba(0, 0, 0, 1);
-        position: absolute;
-        pointer-events: none;
-    }
-
-
-
-    /* Eastward tooltips */
-    &.e:after {
-        content: "\25C0";
-        margin: -4px 0 0 0;
-        top: 46%;
-        left: -58%;
-    }
-
-//d3 end tip /////////////////////////////////////////////////////
-
-
- 
-    
-}

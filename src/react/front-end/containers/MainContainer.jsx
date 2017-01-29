@@ -44,7 +44,7 @@ module.exports = React.createClass({
                         <button onClick={this.changeData} className="btn btn-primary">Change Data</button>
                     </div>
                     <div className="row">
-                        <TopInterests data={this.state.data} />
+                        <TopInterests graphId="topInterestsGraph" data={this.state.data} />
                     </div>
                     
                 </section>
