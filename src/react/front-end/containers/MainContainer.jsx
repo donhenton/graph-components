@@ -13,6 +13,9 @@ var data2 = [
 
 var demographicData1 = {
     listData: ['California', 'Michigan', 'Nevada'],
+    gender: [
+        {"name": "Male", "percentage": 83, color: '#F79221'},
+        {"name": "Female", "percentage": 17, color: '#00AEEF'}],
     language: [
         {"name": "English", "percentage": 61, color: '#F79221'},
         {"name": "English/Great Britain", "percentage": 9, color: '#00AEEF'},
@@ -20,6 +23,9 @@ var demographicData1 = {
 }
 var demographicData2 = {
     listData: ['New Jersey', 'Tennesee', 'Wyoming'],
+     gender: [
+        {"name": "Male", "percentage": 22, color: '#F79221'},
+        {"name": "Female", "percentage": 78, color: '#00AEEF'}],
     language: [
         {"name": "Urdu", "percentage": 21, color: '#ccc'},
         {"name": "English/Great Britain", "percentage": 49, color: '#00AEEF'},

@@ -15,24 +15,31 @@ module.exports = React.createClass({
 
     },
     languagePieChart: null,
+    genderPieChart: null,
     
     componentDidMount: function () {
         
          
         var languagePoint = $('<div  id="languagePieChart"></div>')
                 .appendTo($("#languagePieLocation"))
+        var genderPoint = $('<div  id="genderPieChart"></div>')
+                .appendTo($("#genderPieLocation"))
+        
         var props = {width: 200, height: 200};
          
         //el, props, id, data
         this.languagePieChart = demoGraphicsPieChart
                 .init(languagePoint[0],props,"languagePie",this.props.data.language);
+        this.genderPieChart = demoGraphicsPieChart
+                .init(genderPoint[0],props,"genderPie",this.props.data.gender);
+         
     },
     
     componentWillReceiveProps: function (nextProps) {
         var newData = this.formatData(nextProps.data);
         this.setState({data: newData});
-        console.log("hit new props")
         this.languagePieChart.update(newData.language);
+        this.genderPieChart.update(newData.gender);
     },
     
     renderList: function ()
@@ -79,7 +86,10 @@ module.exports = React.createClass({
                 
                 
                 
-                    <div className="demoGraphics-block"><div className="topListingBlock-title">Gender</div></div>
+                    <div className="demoGraphics-block">
+                        <div className="topListingBlock-title">Gender</div>
+                        <div id="genderPieLocation"></div>
+                    </div>
                     <div className="demoGraphics-block">
                         <div className="topListingBlock-title">Language</div>
                         <div id="languagePieLocation"></div>
