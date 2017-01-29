@@ -188,7 +188,7 @@ module.exports = {
         var self = this;
         function cv_arcTween(a) {
             var i = d3.interpolate(this._current, a);
-            _current = i(0);
+            var _current = i(0);
             return function (t) {
                 return arc(i(t));
             };
