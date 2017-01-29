@@ -9,7 +9,7 @@ module.exports = {
      * 
      *  
             {"name": "US", "percentage": 61, color: '#F79221'},
-     * colors must be unique as they are the key
+     *      colors must be unique as they are the key
      * 
      * @returns {nm$_d3-Demographics.exports}
      */
@@ -38,9 +38,7 @@ module.exports = {
         var arc = d3.svg.arc()
                 .outerRadius(radius - 5)
                 .innerRadius(0);
-        var labelArc = d3.svg.arc()
-                .outerRadius((radius))
-                .innerRadius(radius * 0.65);
+       
         var keyfunctionP = function (d) {
             if (d.color)
             {
@@ -82,24 +80,14 @@ module.exports = {
 
         //////////// outer text labels /////////////////
         var textWithData = svgGroup.selectAll("text").data(arcs, keyfunction);
-        textWithData.enter().append("text")
-                .attr("transform", function (d) {
-                    return "translate(" + labelArc.centroid(d) + ")";
-                })
-                .attr("text-anchor", "middle")
-                .attr("font-weight", "bold")
-                .attr("fill", "#ffffee")
-                .attr("font-size", "10px")
-                .text(function (d) {
-                    return d.data.name ;
-                });
+        
 
 
         ////exit ////////////////////////////////////////////////
         textWithData.exit().remove();
         pieWithData.exit().remove();
         setTransitionsForSlices(pieWithData);
-        setTransitionsForText(textWithData);
+        
         createLegend(data);
 
 
@@ -111,24 +99,8 @@ module.exports = {
         var self = this;
         var legendGroup = svg.append('g').attr("class", 'legend-group')
         var textGroup = svg.selectAll("text.legend-text").data(data, keyfunction);
-        var circleGroup = svg.selectAll(".legend-circle").data(data, keyfunction);
-        legendGroup.append("text")
-                .attr("text-anchor", "left")
-                .attr("fill", "black")
-                .attr("font-size", "18px")
-                .attr("font-weight", "bold")
-                .attr("transform", "translate(5,-5)")
-                .text("Legend");
-
-        legendGroup.append("rect")
-                .attr("x", 0)
-                .attr("y", 0)
-                .attr("height", 1)
-                .attr("width", 120)
-                .style("stroke", 'black')
-                .style("fill", "none")
-                .style("stroke-width", 2);
-        legendGroup.attr('transform', "translate(" + (props.width) + ",20)")
+         
+ 
 
         textGroup.enter()
                 .append("text")
@@ -150,38 +122,12 @@ module.exports = {
                     return d.name + " (" + d.percentage + "%)";
                 }).attr("fill", "red") 
          .transition().duration(600).attr("fill-opacity",1).attr("fill", "black")           
-
-        circleGroup.enter()
-                .append('circle')
-                .attr('class', 'legend-circle')
-                .attr("r", 4)
-                .attr(
-                        'transform', function (d, i) {
-                            return "translate( 400, " + (65 + (i * 30)) + ")"
-
-                        })
-                .attr('fill', function (d, i) {
-                    return d.color;
-                });
-
-
         textGroup.exit().remove();
-        circleGroup.exit().remove();
+        
 
     }
 
-    function setTransitionsForText(textWithData)
-    {
-        var self = this;
-        textWithData
-                .transition().duration(delay).attr("transform", function (d) {
-            return "translate(" + labelArc.centroid(d) + ")";
-        })
-                .text(function (d) {
-                    return d.data.name ;
-                });
-
-    }
+    
 
     function setTransitionsForSlices(pieWithData)
     {
