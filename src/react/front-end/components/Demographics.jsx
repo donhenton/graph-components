@@ -31,7 +31,8 @@ module.exports = React.createClass({
     componentWillReceiveProps: function (nextProps) {
         var newData = this.formatData(nextProps.data);
         this.setState({data: newData});
-        //this.graphUpdater.update(newData)
+        console.log("hit new props")
+        this.languagePieChart.update(newData.language);
     },
     
     renderList: function ()

@@ -20,6 +20,7 @@ module.exports = {
         var svg = null;
         var delay = 250;
         var element = el;
+        var textGroup = null;
         var context = id;
         var legendHeight = 26;
         var intervals = [];
@@ -35,7 +36,7 @@ module.exports = {
         var baseGroup = svg.append('g').classed("base-group",true) 
                 
         svgGroup = baseGroup
-                .attr("transform", "translate(" + (radius + 10) + "," + (radius+20) + ")");
+                .attr("transform", "translate(" + (radius) + "," + (radius+20) + ")");
         var arc = d3.svg.arc()
                 .outerRadius(radius - 5)
                 .innerRadius(0);
@@ -80,12 +81,12 @@ module.exports = {
                     })
 
             //////////// outer text labels /////////////////
-            var textWithData = svgGroup.selectAll("text").data(arcs, keyfunction);
+           // var textWithData = svgGroup.selectAll("text").data(arcs, keyfunction);
 
 
 
             ////exit ////////////////////////////////////////////////
-            textWithData.exit().remove();
+            //textWithData.exit().remove();
             pieWithData.exit().remove();
             setTransitionsForSlices(pieWithData);
 
@@ -100,15 +101,25 @@ module.exports = {
                 return a.percentage < b.percentage
             })
             var self = this;
-            var legendGroup = baseGroup.append('g').attr("class", 'legend-group');
-            legendGroup.attr("transform", "translate(" + (radius + 20) + ","+(-radius)+")")
-            var textGroup = legendGroup.selectAll("text.legend-text").data(data, keyfunction);
+           // var legendGroup = baseGroup.append('g').attr("class", 'legend-group');
+            
+            
+            var legendGroup = svg.selectAll('.legend-group')
+            if (legendGroup[0].length ===0)
+            {
+                legendGroup = baseGroup.append('g').attr("class", 'legend-group');
+                legendGroup.attr("transform", "translate(" + (radius + 10) + ","+(-radius)+")")
+            }
+            
+            
+            
+            textGroup = legendGroup.selectAll("text.legend-text").data(data, keyfunction);
 
 
 
             textGroup.enter()
                     .append("text")
-                    .attr("class", 'legend-text')
+                     
                     .attr("text-anchor", "left")
                     .attr("fill-opacity", 1)
 
@@ -135,19 +146,37 @@ module.exports = {
                     })
                     .text(function (d) {
                         return   d.percentage + "% " + d.name;
-                    });
-            /*        
-             textGroup.transition().duration(200).attr("fill-opacity",.5)        
+                    }) 
+           
+             textGroup
+               .transition()
+               //.duration(200).attr("fill-opacity",.5)        
              .text(function (d) {
              return   d.percentage + "% "+d.name ;
              }).attr("fill", "red") 
-             .transition().duration(600).attr("fill-opacity",1)
+              .attr('transform', function (d, i)
+                    {
+                        return "translate(0," + (50 + (i * 30)) + ")"
+
+                    })
+                    .attr("class",function (d, i)
+                    {
+                       var legendText = 'legend-text ';
+                       if (i === 0)
+                       {
+                           return legendText+' main'
+                       }
+                       return legendText;
+
+                    })
+            // .transition().duration(600).attr("fill-opacity",1)
              .attr('fill', function (d, i)
              {
              return d.color;
              
-             })  
-             */
+             }) 
+             
+              
             textGroup.exit().remove();
 
 
@@ -177,7 +206,7 @@ module.exports = {
         exports.update = function (newData) {
 
 
-            build(data);
+            build(newData);
         };
         return exports;
 
