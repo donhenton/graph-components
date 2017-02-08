@@ -32,10 +32,10 @@ module.exports = React.createClass({
             boxHeight: 450,
             data: this.state.data,
             boxWidth: 800,
-            graphSelectorId: "graphLocation"
+            graphSelectorId: this.props.graphId
         }
 
-        $("#graphRow").html('<div  id="'+params1.graphSelectorId+'"></div>');
+        $("#graphRow").html('<div  id="'+this.props.graphId+'"></div>');
          
         
             this.graphUpdater = topInterests.init(params1);

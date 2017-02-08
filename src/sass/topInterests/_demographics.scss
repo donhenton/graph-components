@@ -1,0 +1,92 @@
+$separator-color: #ccc;
+$number-bkg-color: #000000;
+
+.demoGraphics-container
+{
+
+    display:flex;
+
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+
+    .demoGraphics-block
+    {
+        flex-grow: 1;
+        width: 33%;
+        justify-content: space-between;
+        border-right: thin solid $separator-color; 
+        padding: 1rem;
+        height: 17.5rem;
+        &:last-child
+            {
+            border-right: none;
+        }
+
+        .topListingBlock-title
+        {
+            color: black;
+        }
+
+        &.topListing-block
+        {
+
+
+
+
+            .topListingBlock-controls
+            {
+
+                margin-bottom: 2rem;
+                .inactive
+                {
+                    font-weight: bolder;
+                    margin-right: 2.5rem;
+                }
+                a.topListingBlock-link
+                {
+                    margin-right: 2.5rem;
+                    font-style: italic
+                }
+            }
+        }
+
+        .topListing
+        {
+
+            li
+            {
+                margin-bottom: 2rem;
+                .numberText
+                {
+                    fill: white;
+
+                }
+                .labelText
+                {
+                    font-style: italic;
+                }
+            }
+
+        }
+
+    }
+    
+    
+    #languagePie,
+    #genderPie
+    {
+        .legend-text
+        {
+            font-size: 1rem;
+            &.main
+            {
+                font-weight: bolder;
+                font-size: 1.115rem; 
+            }
+        }
+        
+        
+    }
+    
+}
