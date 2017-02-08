@@ -277,22 +277,15 @@ b {
 .form.inline-form fieldset {
   border: thin solid #667467; }
 
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: "Arial", sans-serif;
-  font-size: 0.95em;
-  text-align: center; }
-
-#chart {
-  border: 1px solid #CCC; }
-
-/* the axis of the graph */
-.axis path {
-  fill: none;
-  stroke: black;
-  stroke-width: 1.5px;
-  shape-rendering: crispEdges; }
+#topInterestsGraph {
+  /* the axis of the graph */ }
+  #topInterestsGraph #chart {
+    border: 1px solid #CCC; }
+  #topInterestsGraph .axis path {
+    fill: none;
+    stroke: black;
+    stroke-width: 1.5px;
+    shape-rendering: crispEdges; }
 
 /* d3 tip ///////////////////////////////////////////////////////////// */
 .d3-tip {
@@ -318,4 +311,48 @@ body, html {
     content: "\25C0";
     margin: -4px 0 0 0;
     top: 46%;
-    left: -58%; }
+    left: -38%; }
+
+.demoGraphics-container {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-size: 1.4rem; }
+  .demoGraphics-container .demoGraphics-block {
+    flex-grow: 1;
+    width: 33%;
+    justify-content: space-between;
+    border-right: thin solid #ccc;
+    padding: 1rem;
+    height: 17.5rem; }
+    .demoGraphics-container .demoGraphics-block:last-child {
+      border-right: none; }
+    .demoGraphics-container .demoGraphics-block .topListingBlock-title {
+      color: black; }
+    .demoGraphics-container .demoGraphics-block.topListing-block .topListingBlock-controls {
+      margin-bottom: 2rem; }
+      .demoGraphics-container .demoGraphics-block.topListing-block .topListingBlock-controls .inactive {
+        font-weight: bolder;
+        margin-right: 2.5rem; }
+      .demoGraphics-container .demoGraphics-block.topListing-block .topListingBlock-controls a.topListingBlock-link {
+        margin-right: 2.5rem;
+        font-style: italic; }
+    .demoGraphics-container .demoGraphics-block .topListing li {
+      margin-bottom: 2rem; }
+      .demoGraphics-container .demoGraphics-block .topListing li .numberText {
+        fill: white; }
+      .demoGraphics-container .demoGraphics-block .topListing li .labelText {
+        font-style: italic; }
+  .demoGraphics-container #languagePie .legend-text,
+  .demoGraphics-container #genderPie .legend-text {
+    font-size: 1rem; }
+    .demoGraphics-container #languagePie .legend-text.main,
+    .demoGraphics-container #genderPie .legend-text.main {
+      font-weight: bolder;
+      font-size: 1.115rem; }
+
+body, html {
+  margin: 10px;
+  padding: 0;
+  font-family: "Arial", sans-serif;
+  font-size: 0.95em; }
